@@ -455,7 +455,7 @@
 
         let body = document.getElementById("tbody");
 
-        let response = await fetch("http://localhost:4000/readteachers");
+        let response = await fetch("/readteachers");
 
         let result = await response.json();
 
@@ -511,7 +511,7 @@
         let education = document.getElementById("education").value;
 
 
-        let response = await fetch("http://localhost:4000/addteachers", {
+        let response = await fetch("/addteachers", {
 
                 method: "POST",
 
@@ -552,7 +552,7 @@
 
     async function deleteteacher(id) {
 
-        let response = await fetch("http://localhost:4000/deleteteachers", {
+        let response = await fetch("/deleteteachers",  {
 
                 method: "POST",
 
@@ -586,7 +586,7 @@
 
     async function editteacher(id) {
 
-        let response = await fetch("http://localhost:4000/readsingleteacher", {
+        let response = awaitfetch("/readsingleteacher", {
 
                 method: "POST",
 
@@ -632,7 +632,7 @@
         let education = document.getElementById("education").value;
 
 
-        let response = await fetch("http://localhost:4000/updateteachers", {
+        let response = await fetch("/updateteachers",  {
 
                 method: "POST",
 
