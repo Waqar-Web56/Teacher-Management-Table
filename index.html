@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Management</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background: linear-gradient(120deg, #f8fafc, #e0f2fe);
+            color: #1e293b;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+        }
+
+        /* ================= HEADING ================= */
+
+        .heading {
+            text-align: left;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .heading h1 {
+            font-size: 34px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .heading h1::before {
+            content: "";
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        /* ================= INPUT ROW ================= */
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-box label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 55px;
+            padding: 0 17px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 15px;
+            outline: none;
+            background: #f8fafc;
+            transition: 0.3s;
+        }
+
+        .input-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-box input:hover {
+            border-color: #cbd5e1;
+        }
+
+        .input-box input:focus {
+            background: white;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.12);
+        }
+
+        /* ================= BUTTONS ================= */
+
+        form button {
+            height: 52px;
+            padding: 0 28px;
+            border: none;
+            border-radius: 13px;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 8px;
+        }
+
+        #addbtn {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        #updatebtn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            margin-left: 10px;
+        }
+
+        form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ================= TABLE CARD ================= */
+
+        .table-card {
+            margin-top: 35px;
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
+        }
+
+        /* ================= TABLE HEADING ================= */
+
+        .table-heading {
+            margin-bottom: 25px;
+        }
+
+        .table-heading h2 {
+            color: #0f172a;
+            font-size: 26px;
+            margin-bottom: 7px;
+        }
+
+        .table-heading h2::before {
+            content: "";
+        }
+
+        .table-heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        thead {
+            background: #0f172a;
+        }
+
+        th {
+            padding: 18px 15px;
+            color: white;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        th:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        tbody tr {
+            background: #f8fafc;
+            transition: 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #ecfeff;
+            transform: scale(1.005);
+        }
+
+        tbody td {
+            padding: 16px 15px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody td:first-child {
+            border-left: 1px solid #e2e8f0;
+            border-radius: 12px 0 0 12px;
+            font-weight: bold;
+            color: #0891b2;
+        }
+
+        tbody td:last-child {
+            border-right: 1px solid #e2e8f0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* ================= TABLE BUTTONS ================= */
+
+        tbody button {
+            border: none;
+            padding: 9px 15px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-right: 5px;
+        }
+
+        tbody button:first-child {
+            background: #ef4444;
+        }
+
+        tbody button:last-child {
+            background: #6366f1;
+        }
+
+        tbody button:hover {
+            transform: translateY(-2px);
+            opacity: 0.85;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 20px 10px;
+            }
+
+            .input-row {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .table-card {
+                padding: 25px 15px;
+            }
+
+            form button {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-top: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- FORM -->
+
+        <div class="form-card">
+
+            <div class="heading">
+
+                <h1>Teacher Management</h1>
+
+                <p>
+                    Enter teacher information below
+                </p>
+
+            </div>
+
+
+            <form>
+
+                <div class="input-row">
+
+                    <div class="input-box">
+
+                        <input
+                            type="text"
+                            id="teacherid"
+                            style="display: none"
+                        >
+
+                        <label>Teacher Name</label>
+
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Enter teacher name"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>Age</label>
+
+                        <input
+                            id="age"
+                            type="number"
+                            placeholder="Enter age"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-row">
+
+                    <div class="input-box">
+
+                        <label>Salary</label>
+
+                        <input
+                            id="salary"
+                            type="number"
+                            placeholder="Enter salary"
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>Education</label>
+
+                        <input
+                            id="education"
+                            type="text"
+                            placeholder="Enter education"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button id="addbtn" type="button">
+                     Add Teacher
+                </button>
+
+                <button id="updatebtn" type="button">
+                     Update Teacher
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-card">
+
+            <div class="table-heading">
+
+                <h2>Teacher Records</h2>
+
+                <p>
+                    Teacher data will appear here from Supabase
+                </p>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Name</th>
+
+                            <th>Age</th>
+
+                            <th>Salary</th>
+
+                            <th>Education</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tbody">
+
+                        <!-- Supabase data will be shown here -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    async function readteachers() {
+
+        let body = document.getElementById("tbody");
+
+        let response = await fetch("http://localhost:4000/readteachers");
+
+        let result = await response.json();
+
+        let row = "";
+
+        for (let i = 0; i < result.length; i++) {
+
+            let teacher = result[i];
+
+            row += `
+                <tr>
+
+                    <td>${teacher.id}</td>
+
+                    <td>${teacher.name}</td>
+
+                    <td>${teacher.age}</td>
+
+                    <td>${teacher.salary}</td>
+
+                    <td>${teacher.education}</td>
+
+                    <td>
+
+                        <button onclick="deleteteacher(${teacher.id})"> Delete </button>
+
+                        <button onclick="editteacher(${teacher.id})"> Edit </button>
+
+                    </td>
+
+                </tr>
+            `;
+        }
+
+        body.innerHTML = row;
+    }
+
+
+    readteachers();
+
+
+    let button = document.getElementById("addbtn");
+
+
+    button.addEventListener("click", async () => {
+
+        let name = document.getElementById("name").value;
+
+        let age = document.getElementById("age").value;
+
+        let salary = document.getElementById("salary").value;
+
+        let education = document.getElementById("education").value;
+
+
+        let response = await fetch("http://localhost:4000/addteachers", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({name: name,age: age,salary: salary,education: education })
+
+            });
+
+
+        let result = await response.text();
+
+        if (result == "teacher added") {
+
+            alert("Teacher Added");
+
+            readteachers();
+
+            document.getElementById("name").value = "";
+
+            document.getElementById("age").value = "";
+
+            document.getElementById("salary").value = "";
+
+            document.getElementById("education").value = "";
+
+        }
+
+        else {
+            alert("Teacher Added Failed");
+
+        }
+
+    });
+
+
+    async function deleteteacher(id) {
+
+        let response = await fetch("http://localhost:4000/deleteteachers", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({id: id})
+
+            });
+
+
+        let result = await response.text();
+
+        if (result == "teachers delete") {
+
+            alert("Teacher Deleted");
+
+            readteachers();
+
+        }
+
+        else {
+
+            alert("Teacher Delete Failed");
+
+        }
+
+    }
+
+
+    async function editteacher(id) {
+
+        let response = await fetch("http://localhost:4000/readsingleteacher", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({id: id})
+
+            });
+
+        let result = await response.json();
+
+        let singleteacher = result[0];
+
+
+        document.getElementById("name").value = singleteacher.name;
+
+        document.getElementById("age").value = singleteacher.age;
+
+        document.getElementById("salary").value = singleteacher.salary;
+
+        document.getElementById("education").value = singleteacher.education;
+
+        document.getElementById("teacherid").value = singleteacher.id;
+
+    }
+
+
+    let updatebtn = document.getElementById("updatebtn");
+
+
+    updatebtn.addEventListener("click", async () => {
+
+        let name = document.getElementById("name").value;
+
+        let age = document.getElementById("age").value;
+
+        let salary = document.getElementById("salary").value;
+
+        let id = document.getElementById("teacherid").value;
+
+        let education = document.getElementById("education").value;
+
+
+        let response = await fetch("http://localhost:4000/updateteachers", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({name: name,age: age,salary: salary,education: education,id: id  })
+
+            });
+
+
+        let result =
+            await response.text();
+
+
+        if (result == "teacher updated") {
+
+            alert("Teacher Updated");
+
+            readteachers();
+
+            document.getElementById("name").value = "";
+
+            document.getElementById("age").value = "";
+
+            document.getElementById("salary").value = "";
+
+            document.getElementById("education").value = "";
+
+            document.getElementById("teacherid").value = "";
+
+        }
+
+        else {
+
+            alert("Teacher Update Failed");
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>
