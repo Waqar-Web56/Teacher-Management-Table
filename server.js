@@ -56,4 +56,4 @@ app.post("/updateteachers", async (req, res) => {
   }
 });
 
-app.listen(4000);
+module.exports = app;
